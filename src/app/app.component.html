@@ -44,10 +44,6 @@
 
     <h3 class="alert">Contact Details</h3>
 
-    <!-- <ng-multiselect-dropdown [placeholder]="'---Select---'" [settings]="dropdownSettings" [data]="dropdownList"
-      (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-    </ng-multiselect-dropdown> -->
-
     <div formArrayName="address" *ngFor="let contact of testForm.get('address')['controls']; let i = index;">
       <div [formGroupName]="i">
         <div class="form-group">
@@ -102,8 +98,7 @@
 
 
             <div class="col-md-2">
-              <button [class.d-none]='i===0' (click)="deleteAddress(i)"
-                class="btn btn-danger mt-4.5 ml-3">Delete</button>
+              <button [class.d-none]='i===0' (click)="deleteArray(i)" class="btn btn-danger mt-4.5 ml-3">Delete</button>
             </div>
           </div>
         </div>
