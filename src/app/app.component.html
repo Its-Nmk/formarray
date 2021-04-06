@@ -1,19 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="container mt-3">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{title}}</title>
-</head>
 
-<body>
-  <h1>This is a general Stage</h1>
-  <form formGroupName="testForm">
-    <input type="text" placeholder="test input">
+
+
+  <form [formGroup]="testForm">
+    {{testForm.value | json}}
+
+    <div class=" form-group">
+      <label for="pass"> Contact Person Name</label>
+      <input [class.is-invalid]="cpName.invalid && cpName.touched" required formControlName="cpName" type="text"
+        class="form-control">
+      <!-- Conditional Error Messages -->
+      <div *ngIf="cpName.invalid && cpName.touched">
+        <small *ngIf="cpName.errors?.required" class="text-danger"> Name is Required</small>
+        <small *ngIf="cpName.errors?.minlength" class="text-danger">Minimum 3 Characters required</small>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="pass">Company</label>
+      <input [class.is-invalid]="company.invalid && company.touched " required formControlName="company" type="text"
+        class="form-control">
+      <!-- Conditional Error Messages -->
+      <div *ngIf="company.invalid && company.touched">
+        <small *ngIf="company.errors?.required" class="text-danger">Company Name is Required</small>
+        <small *ngIf="company.errors?.minlength" class="text-danger">Minimum 3 Characters required</small>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="pass">Designation</label>
+      <input [class.is-invalid]="designation.invalid && designation.touched " required formControlName="designation"
+        type="text" class="form-control">
+      <!-- Conditional Error Messages -->
+      <div *ngIf="designation.invalid && designation.touched">
+        <small *ngIf="designation.errors?.required" class="text-danger">Designation is Required</small>
+        <small *ngIf="designation.errors?.minlength" class="text-danger">Minimum 3 Characters required</small>
+      </div>
+    </div>
+
+
+    <h3 class="alert">Contact Details</h3>
+
+    <!-- <ng-multiselect-dropdown [placeholder]="'---Select---'" [settings]="dropdownSettings" [data]="dropdownList"
+      (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+    </ng-multiselect-dropdown> -->
+
+    <div formArrayName="address" *ngFor="let contact of testForm.get('address')['controls']; let i = index;">
+      <div [formGroupName]="i">
+        <div class="form-group">
+          <div class="row">
+
+            <div class="col-md-2">
+              <label for="category">Category</label>
+              <select
+                [class.is-invalid]="addresss.controls[i].get('category').invalid && addresss.controls[i].get('category').touched"
+                class="custom-select" formControlName="category">
+                <option value="primary" selected>Primary</option>
+                <option value="secondary">Secondary</option>
+                <option value="office">Office</option>
+              </select>
+              <div *ngIf="addresss.controls[i].get('category').invalid && addresss.controls[i].get('category').touched">
+                <small *ngIf="addresss.controls[i].get('category').errors?.required" class="text-danger">Select
+                  Category</small>
+                <small *ngIf="addresss.controls[i].get('category').errors.minlength" class="text-danger">Select
+                  Category</small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="email">Email address</label>
+              <input
+                [class.is-invalid]="addresss.controls[i].get('email').invalid && addresss.controls[i].get('email').touched"
+                formControlName="email" type="email" class="form-control" id="email">
+              <div *ngIf="addresss.controls[i].get('email').invalid && addresss.controls[i].get('email').touched">
+                <small *ngIf="addresss.controls[i].get('email').errors?.required" class="text-danger">Email is
+                  Required</small>
+                <small *ngIf="addresss.controls[i].get('email').errors.pattern" class="text-danger">Enter Email
+                  Only</small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="pass">Phone</label>
+              <input
+                [class.is-invalid]="addresss.controls[i].get('phone').invalid && addresss.controls[i].get('phone').touched"
+                formControlName="phone" type="tel" class="form-control">
+              <div *ngIf="addresss.controls[i].get('phone').invalid && addresss.controls[i].get('phone').touched">
+                <small *ngIf="addresss.controls[i].get('phone').errors?.required" class="text-danger">Phone is
+                  Required</small>
+                <small
+                  *ngIf="addresss.controls[i].get('phone').errors?.minlength || addresss.controls[i].get('phone').errors?.maxlength"
+                  class="text-danger">10
+                  digits are
+                  required</small>
+              </div>
+            </div>
+
+
+
+            <div class="col-md-2">
+              <button [class.d-none]='i===0' (click)="deleteAddress(i)"
+                class="btn btn-danger mt-4.5 ml-3">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button [disabled]="!testForm.valid" type='submit' class="btn btn-success mr-3">Save Data</button>
   </form>
-  <button (click)="addInput()">Add</button>
-</body>
+  <button (click)="addArray()" class="btn btn-primary mt-4 ml-3">Add Contact</button>
 
-</html>
+</div>
